@@ -22,7 +22,7 @@ For orders:  [('apples', 3.0)] best shop is shop2
 """
 from __future__ import print_function
 import shop
-
+from functools import reduce
 
 def shopSmart(orderList, fruitShops):
     """
@@ -30,7 +30,43 @@ def shopSmart(orderList, fruitShops):
         fruitShops: List of FruitShops
     """
     "*** YOUR CODE HERE ***"
+    #take in list of fruit and weight, and a list of shops
+    #return which shop  in which order costs least
     
+    #list to stores total price for each order
+    prices = []
+
+    
+    #for each shop, calculate the total price for each fruit in the order
+    # add to prices list, where each inner list represents price for
+    
+    for shop in fruitShops:
+        #list of total price for each fruit quanitity per order
+        price = []
+        for item in orderList:
+            #get the cost of the fruit per unit
+            cost = shop.getCostPerPound(item[0])
+    ################################################################
+                    ##debugging code##
+    ################################################################
+            #add the name of the fruit
+            #price.append(item[0])
+            #add the cost of the fruit
+            #price.append(cost)
+    ################################################################
+            #add the price of the fruit per order
+            price.append(item[1] * cost)
+        #sum of the price for the entire order
+        total = reduce(lambda x,y: x+y,price)
+        prices.append((total))
+    
+    #select the cheapest price in the list of prices per order
+    cheapest = min(prices)
+    
+    #use the index of the cheapest price to select the shop that has the
+    #cheapest price
+    return fruitShops[prices.index(cheapest)]      
+
 
 
 if __name__ == '__main__':
