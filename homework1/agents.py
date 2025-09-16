@@ -19,9 +19,10 @@ class BasicAgent(Agent):
   def getAction(self, state):
     # a legal pacman action from the array is chosen, thus no error codes returned
     #however, it becomes an infinite action, so do not run
-    #return state.getLegalPacmanActions()[0]
-    
-    #random agent
+    return state.getLegalPacmanActions()[0]
+
+class RandomAgent(Agent):
+    def getAction(self, state):
         #create a random number based on the length of state.getLegalPacmanActions()
         #arr to index the array with at the call
         
@@ -31,35 +32,44 @@ class BasicAgent(Agent):
         #get current positoin of pacman
         
         #If the length of the list of legal actions is more than a single option
-        ##if len(state.getLegalPacmanActions()) > 1:
+        if len(state.getLegalPacmanActions()) > 1:
             #remove any option that equals stop if it exists
-            ####filtered = list(filter(lambda x: x != "Stop", state.getLegalPacmanActions()))
+            filtered = list(filter(lambda x: x != "Stop", state.getLegalPacmanActions()))
             
             #get the length of that filtered list and pick a random number
             #from zero to the length to index with
-            ##random_num = int(len(filtered) * random())
+            random_num = int(len(filtered) * random())
             
             #index the filtered list with the randomly selected index
-            ##choice = filtered[random_num]
-            ##print(choice)
-            ##print(state.getPacmanPosition())                
-            ##return choice
+            choice = filtered[random_num]
+            print(choice)
+            print(state.getPacmanPosition())                
+            return choice
         #if the length of options is only one, return that value
-        ##else:
-            ##choice = state.getLegalPacmanActions()[0]
-            ##return choice
-            ##print("length less than 2"+choice)
+        else:
+            choice = state.getLegalPacmanActions()[0]
+            return choice
+            print("length less than 2"+choice)
             
-        #Reflex Agent
+class ReflexAgent(Agent):
+    def getAction(self, state):
+
         #examines possible one-step moves EXCEPT "Stop"
         #selects a random one of those moves that has a pellet 
         #if none, then a random move other than "Stop" should be returned
+        
+        ##access grid positions and push towards location
         positions = []
         if state.getPacmanPosition() not in positions:
             positions.append(state.getPacmanPosition())
+            
+        for i in range(len(state.getFood())):
+            for j in range(len(state.getFood())[i]):
+                if matrix[i][j] == element:
+                    positions.append((i, j))
         
-        ##currentFood = state.getFood()
-        ##if currentFood[x][y] == True:
+        currentFood = state.getFood()
+        if currentFood[x][y] == True:
             
         # get current location from state.getPacmanState() class
         
@@ -80,7 +90,10 @@ class BasicAgent(Agent):
                 return choice
             else:
                 choice = "Stop"
-                return choice
+        
+        #asses coordinate location of current_food and put pacman there
+        #how do you do that for a Grid object?
+            
         
         
         #print(type(state.getPacmanState()))
