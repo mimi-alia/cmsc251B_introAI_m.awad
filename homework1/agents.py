@@ -31,23 +31,62 @@ class BasicAgent(Agent):
         #get current positoin of pacman
         
         #If the length of the list of legal actions is more than a single option
-        if len(state.getLegalPacmanActions()) > 1:
+        ##if len(state.getLegalPacmanActions()) > 1:
             #remove any option that equals stop if it exists
-            filtered = list(filter(lambda x: x != "Stop", state.getLegalPacmanActions()))
+            ####filtered = list(filter(lambda x: x != "Stop", state.getLegalPacmanActions()))
             
             #get the length of that filtered list and pick a random number
             #from zero to the length to index with
-            random_num = int(len(filtered) * random())
+            ##random_num = int(len(filtered) * random())
             
             #index the filtered list with the randomly selected index
-            choice = filtered[random_num]
-            print(choice)                
-            return choice
+            ##choice = filtered[random_num]
+            ##print(choice)
+            ##print(state.getPacmanPosition())                
+            ##return choice
         #if the length of options is only one, return that value
-        else:
-            choice = state.getLegalPacmanActions()[0]
-            return choice
-            print("length less than 2"+choice)
+        ##else:
+            ##choice = state.getLegalPacmanActions()[0]
+            ##return choice
+            ##print("length less than 2"+choice)
+            
+        #Reflex Agent
+        #examines possible one-step moves EXCEPT "Stop"
+        #selects a random one of those moves that has a pellet 
+        #if none, then a random move other than "Stop" should be returned
+        positions = []
+        if state.getPacmanPosition() not in positions:
+            positions.append(state.getPacmanPosition())
         
+        ##currentFood = state.getFood()
+        ##if currentFood[x][y] == True:
+            
+        # get current location from state.getPacmanState() class
+        
+        # get current location from state.getPacmanPosition() tuple
+        current_position = [[*state.getPacmanPosition()]]
+        
+        #get location of the food pellet(s)
+        current_food = state.getFood()
+        
+        # if the current position does not contain a pellet, move
+        for x,y in current_position:
+            if current_food[x][y] == False:
+                filtered = list(filter(lambda x: x != "Stop", state.getLegalPacmanActions()))
+                random_num = int(len(filtered) * random())
+                choice = filtered[random_num]
+                print(choice)
+                print(state.getPacmanPosition())
+                return choice
+            else:
+                choice = "Stop"
+                return choice
+        
+        
+        #print(type(state.getPacmanState()))
+        #print(state.getFood()[5][5] == True)
+        #print(current_position)
+        
+
             
         
