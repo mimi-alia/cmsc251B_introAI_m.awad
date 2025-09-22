@@ -69,15 +69,15 @@ class ReflexAgent(Agent):
                     positions.append((i, j))
         
         currentFood = state.getFood()
-        if currentFood[x][y] == True:
+        #if currentFood[x][y] == True:
             
         # get current location from state.getPacmanState() class
         
         # get current location from state.getPacmanPosition() tuple
-        current_position = [[*state.getPacmanPosition()]]
+        #current_position = [[*state.getPacmanPosition()]]
         
         #get location of the food pellet(s)
-        current_food = state.getFood()
+        #current_food = state.getFood()
         
         # if the current position does not contain a pellet, move
         for x,y in current_position:
