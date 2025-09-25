@@ -265,7 +265,6 @@ def euclideanHeuristic(position, problem, info={}):
 #####################################################
 # This portion is incomplete.  Time to write code!  #
 #####################################################
-        
 
 class CornersProblem(search.SearchProblem):
     """
@@ -541,25 +540,3 @@ def mazeDistance(point1, point2, gameState):
     assert not walls[x2][y2], 'point2 is a wall: ' + str(point2)
     prob = PositionSearchProblem(gameState, start=point1, goal=point2, warn=False, visualize=False)
     return len(search.bfs(prob))
-
-"""
-Node Class that stores current information about current node
-"""
-class Node():
-    """
-    Node object containing state, parent node, action to that state, step cost,
-    path cost
-    """
-    def __init__(self, state):
-        #retrieve current state data from GameState class
-        self.state = state
-        #retrieve parent node
-        self.parent = PositionSearchProblem.getStartState(self)
-        #action to current state
-        self.action = SearchAgent.getAction(self, state)
-        #step cost
-        self.step_cost = PositionSearchProblem.getCostOfActions(self, actions)
-        #path cost
-        # ??? how is this different from step?
-        
-        

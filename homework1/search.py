@@ -19,6 +19,14 @@ Pacman agents (in searchAgents.py).
 
 import util
 
+class Node():
+    def __init__(self, state, action=None, parent=None, path_cost=0, step_cost=0):
+        self.state = state
+        self.action = action
+        self.parent = parent
+        self.path_cost = path_cost
+        self.step_cost = step_cost
+
 class SearchProblem:
     """
     This class outlines the structure of a search problem, but doesn't implement
@@ -87,16 +95,118 @@ def depthFirstSearch(problem):
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     """
     "*** YOUR CODE HERE ***"
+    ##save start state to local var
+    initial_state = problem.getStartState()
+    
+    ##save successors of initial state to var
+    initial_state_frontier = problem.getSuccessors(initial_state)
+    
+    ##initiate a new instance of util.Stack class object
+    stack = util.Stack() 
+    
+    ##add frontier to stack object's list attribute
+    
+    [stack.push(x) for x in initial_state_frontier]
+    
+    
+    ##initial explored list is an empty list
+    explored = set()
+    
+    
+    ##while frontier is not empty
+    while len(stack.list) > 0:
+        ##remove last item from stack list, save to variable
+        current_state = stack.pop()
+        
+        ##get successors of the current state
+        cur_frontier = problem.getSuccessors(current_state[0])
+        
+        ##since the state has been expanded, add it to explored
+        explored.add(current_state)
+           
+        ##if solution found
+        if (problem.isGoalState(current_state[0])):
+            ##list of actions from s to g
+            actions = [x[1] for x in explored]
+            print("solution actions: ", actions)
+            return actions
+        ##if solution not found, push states to stack
+        else:
+                ##add any unnexplored successor to the stack
+               for suc in cur_frontier:
+                    if suc not in explored:
+                        stack.push(suc)
+                    else:
+                        print("loser: ", explored)
+                        return []
+       ##this doesn't run properly and i dont know why. I followed proper
+       ##logic so...
+        
+    
+    print(problem.isGoalState((3,5)))
+    
     util.raiseNotDefined()
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
+    ##save start state to local var
+    initial_state = problem.getStartState()
+    
+    ##save successors of initial state to var
+    initial_state_frontier = problem.getSuccessors(initial_state)
+    
+    ##initiate a new instance of util.Queue class object
+    queue = util.Queue() 
+    
+    ##add frontier to queue object's list attribute
+    
+    [queue.push(x) for x in initial_state_frontier]
+    
+    
+    ##initial explored list is an empty list
+    explored = set()
+    
+    
+    ##while frontier is not empty
+    while len(queue.list) > 0:
+        ##remove last item from stack list, save to variable
+        current_state = queue.pop()
+        
+        ##get successors of the current state
+        cur_frontier = problem.getSuccessors(current_state[0])
+        
+        ##since the state has been expanded, add it to explored
+        explored.add(current_state)
+           
+        ##if solution found
+        if (problem.isGoalState(current_state[0])):
+            ##list of actions from s to g
+            actions = [x[1] for x in explored]
+            print("solution actions: ", actions)
+            return actions
+        ##if solution not found, push states to queue
+        else:
+                ##add any unnexplored successor to the queue
+               for suc in cur_frontier:
+                    if suc not in explored:
+                        queue.push(suc)
+                    else:
+                        print("loser: ", explored)
+                        return []
     util.raiseNotDefined()
 
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
+    
+    ### I would solve this by calling dfs then bfs over each layer expanded
+    ###after initial dfs search was called. this would require embedding
+    ##iterations so that a depth is reached first, then every node is expanded
+    ##on that same level
+    
+    
+    
     util.raiseNotDefined()
 
 def nullHeuristic(state, problem=None):
